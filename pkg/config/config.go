@@ -14,8 +14,16 @@ type DBConfig struct {
 	SSLMode  string `json:"sslmode"`
 }
 
+type AWSConfig struct {
+	AccessKeyID     string `json:"access_key_id"`
+	SecretAccessKey string `json:"secret_access_key"`
+	Region          string `json:"region"`
+	BucketName      string `json:"bucket_name"`
+}
+
 type Config struct {
-	Database DBConfig `json:"database"`
+	Database DBConfig  `json:"database"`
+	Aws      AWSConfig `json:"aws"`
 }
 
 func LoadConfig() (*Config, error) {
@@ -30,6 +38,12 @@ func LoadConfig() (*Config, error) {
 			Password: getEnv("DB_PASSWORD", ""),
 			DBName:   getEnv("DB_NAME", "defaultdb"),
 			SSLMode:  getEnv("DB_SSLMODE", "disable"),
+		},
+		Aws: AWSConfig{
+			AccessKeyID:     getEnv("AWS_ACCESS_KEY_ID", ""),
+			SecretAccessKey: getEnv("AWS_SECRET_ACCESS_KEY", ""),
+			Region:          getEnv("AWS_REGION", ""),
+			BucketName:      getEnv("AWS_BUCKET_NAME", ""),
 		},
 	}
 

@@ -32,7 +32,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8081/api/v1/products/1036001381622579201",
+					"raw": "localhost:8081/api/v1/products/1036581816064081921",
 					"host": [
 						"localhost"
 					],
@@ -41,25 +41,51 @@
 						"api",
 						"v1",
 						"products",
-						"1036001381622579201"
+						"1036581816064081921"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "create product",
+			"name": "create product v2 form",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"name\":\"product2\",\n    \"description\":\"some desc or this product\",\n    \"price\": 50.00,\n    \"category\": \"food\",\n    \"stock\": 30,\n    \"image\": \"https://google.com\"\n\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/Users/quqo-copter/Desktop/Ragdoll Cat.jpg"
+						},
+						{
+							"key": "name",
+							"value": "Test Data",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "test desc",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "17.45",
+							"type": "text"
+						},
+						{
+							"key": "category",
+							"value": "food",
+							"type": "text"
+						},
+						{
+							"key": "stock",
+							"value": "20",
+							"type": "text"
 						}
-					}
+					]
 				},
 				"url": {
 					"raw": "localhost:8081/api/v1/products",
@@ -77,21 +103,47 @@
 			"response": []
 		},
 		{
-			"name": "update product",
+			"name": "update product v2",
 			"request": {
 				"method": "PUT",
 				"header": [],
 				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"name\":\"Prod 3\",\n    \"description\":\"some desc or this product\",\n    \"price\": 51.00,\n    \"category\": \"food\",\n    \"stock\": 29,\n    \"image\": \"https://google.com\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/Users/quqo-copter/Desktop/Ragdoll Cat.jpg"
+						},
+						{
+							"key": "name",
+							"value": "forrest gump",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "movie",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "14.99",
+							"type": "text"
+						},
+						{
+							"key": "category",
+							"value": "Movie",
+							"type": "text"
+						},
+						{
+							"key": "stock",
+							"value": "5",
+							"type": "text"
 						}
-					}
+					]
 				},
 				"url": {
-					"raw": "localhost:8081/api/v1/products/1036000683239505921",
+					"raw": "localhost:8081/api/v1/products/1036595302058033153",
 					"host": [
 						"localhost"
 					],
@@ -100,7 +152,7 @@
 						"api",
 						"v1",
 						"products",
-						"1036000683239505921"
+						"1036595302058033153"
 					]
 				}
 			},
@@ -128,12 +180,34 @@
 			"response": []
 		},
 		{
+			"name": "delete product image",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/api/v1/products/image/1036595302058033153",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"products",
+						"image",
+						"1036595302058033153"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "get product by name",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8081/api/v1/products/search?name=some",
+					"raw": "localhost:8081/api/v1/products/search?name=",
 					"host": [
 						"localhost"
 					],
@@ -147,7 +221,7 @@
 					"query": [
 						{
 							"key": "name",
-							"value": "some"
+							"value": ""
 						}
 					]
 				}
