@@ -9,13 +9,7 @@ import (
 	"product-challenge/pkg/config"
 )
 
-func NewCockroachDB() (*gorm.DB, error) {
-	// Load configuration
-	cfg, err := config.LoadConfig()
-	if err != nil {
-		return nil, fmt.Errorf("failed to load config: %v", err)
-	}
-
+func NewCockroachDB(cfg *config.Config) (*gorm.DB, error) {
 	// data source name config. CockroachDB can use postgres diver
 	dsn := fmt.Sprintf("host=%s port=%s user=%s dbname=%s sslmode=%s",
 		cfg.Database.Host,

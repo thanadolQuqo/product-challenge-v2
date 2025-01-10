@@ -18,5 +18,6 @@ func SetupProductRoutes(router *gin.RouterGroup, controller controller.ProductCo
 		products.PUT("/:id", controller.UpdateProduct)
 		//delete
 		products.DELETE("/:id", controller.DeleteProduct)
+		products.DELETE("/image/:id", controller.DeleteProductImage)
 	}
 }
