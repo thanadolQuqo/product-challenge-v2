@@ -7,13 +7,13 @@ import (
 )
 
 type ProductService interface {
-	Create(ctx context.Context, user *models.UpsertProductRequest) (*models.Products, error)
+	Create(ctx context.Context, req *models.UpsertProductRequest) (*models.Products, error)
 	GetAll() ([]models.Products, error)
-	GetById(id int) (*models.Products, error)
+	GetById(ctx context.Context, id int) (*models.Products, error)
 	GetByName(name string) ([]models.Products, error)
 	Update(ctx context.Context, product *models.UpsertProductRequest, productId int) (*models.Products, error)
-	Delete(id int) error
-	DeleteImage(id int) error
+	Delete(ctx context.Context, id int) error
+	DeleteImage(ctx context.Context, id int) error
 }
 
 type productService struct {
@@ -41,8 +41,8 @@ func (s *productService) GetAll() ([]models.Products, error) {
 	return products, nil
 }
 
-func (s *productService) GetById(id int) (*models.Products, error) {
-	product, err := s.repo.GetById(id)
+func (s *productService) GetById(ctx context.Context, id int) (*models.Products, error) {
+	product, err := s.repo.GetById(ctx, id)
 	if err != nil {
 		return nil, err
 	}
@@ -65,16 +65,16 @@ func (s *productService) Update(ctx context.Context, req *models.UpsertProductRe
 	return product, nil
 }
 
-func (s *productService) Delete(id int) error {
-	err := s.repo.Delete(id)
+func (s *productService) Delete(ctx context.Context, id int) error {
+	err := s.repo.Delete(ctx, id)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func (s *productService) DeleteImage(id int) error {
-	err := s.repo.DeleteImage(id)
+func (s *productService) DeleteImage(ctx context.Context, id int) error {
+	err := s.repo.DeleteImage(ctx, id)
 	if err != nil {
 		return err
 	}

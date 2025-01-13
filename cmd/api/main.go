@@ -26,12 +26,18 @@ func main() {
 	}
 
 	ctx := context.Background()
+	// connect to redis
+	redis, err := database.NewRedisCache(ctx, cfg)
+	if err != nil {
+		log.Fatalf("Failed to connect to Redis: %v", err)
+	}
+
 	aws, err := storage.NewS3Client(ctx, cfg)
 	if err != nil {
 		log.Fatalf("Failed to get aws client: %v", err)
 	}
 
-	productRepo := repository.NewProductRepository(db, aws, cfg)
+	productRepo := repository.NewProductRepository(db, aws, cfg, redis)
 	productService := services.NewProductService(productRepo)
 	productController := controller.NewProductController(productService)
 
