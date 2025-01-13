@@ -1,8 +1,10 @@
 package config
 
 import (
+	"fmt"
 	"github.com/joho/godotenv"
 	"os"
+	"strconv"
 )
 
 type DBConfig struct {
@@ -21,15 +23,29 @@ type AWSConfig struct {
 	BucketName      string `json:"bucket_name"`
 }
 
+type RedisConfig struct {
+	Host     string `json:"host"`
+	Username string `json:"username"`
+	Password string `json:"password"`
+	DB       int    `json:"db"`
+	//Protocol int    `json:"protocol"`
+}
+
 type Config struct {
-	Database DBConfig  `json:"database"`
-	Aws      AWSConfig `json:"aws"`
+	Database DBConfig    `json:"database"`
+	Aws      AWSConfig   `json:"aws"`
+	Redis    RedisConfig `json:"redis"`
 }
 
 func LoadConfig() (*Config, error) {
 	// load config from .env file
 	godotenv.Load()
 
+	redisDB, err := strconv.ParseInt(getEnv("REDIS_DB", "0"), 10, 64)
+	if err != nil {
+		fmt.Println("Unable to load redis config: ", err)
+		return nil, err
+	}
 	config := &Config{
 		Database: DBConfig{
 			Host:     getEnv("DB_HOST", "localhost"),
@@ -44,6 +60,13 @@ func LoadConfig() (*Config, error) {
 			SecretAccessKey: getEnv("AWS_SECRET_ACCESS_KEY", ""),
 			Region:          getEnv("AWS_REGION", ""),
 			BucketName:      getEnv("AWS_BUCKET_NAME", ""),
+		},
+		Redis: RedisConfig{
+			Host:     getEnv("REDIS_HOST", "localhost"),
+			Username: getEnv("REDIS_USER", "default"),
+			Password: getEnv("REDIS_PASSWORD", ""),
+			DB:       int(redisDB),
+			//Protocol: 2,
 		},
 	}
 

@@ -71,7 +71,7 @@ func (c *ProductController) GetById(ctx *gin.Context) {
 		return
 	}
 
-	product, err := c.service.GetById(int(id))
+	product, err := c.service.GetById(ctx, int(id))
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			ctx.JSON(http.StatusNotFound, gin.H{"message": "Product not found"})
@@ -147,7 +147,7 @@ func (c *ProductController) DeleteProduct(ctx *gin.Context) {
 		return
 	}
 
-	err = c.service.Delete(int(id))
+	err = c.service.Delete(ctx, int(id))
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -163,7 +163,7 @@ func (c *ProductController) DeleteProductImage(ctx *gin.Context) {
 		return
 	}
 
-	err = c.service.DeleteImage(int(id))
+	err = c.service.DeleteImage(ctx, int(id))
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
