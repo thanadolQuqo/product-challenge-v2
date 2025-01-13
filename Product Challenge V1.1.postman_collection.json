@@ -32,7 +32,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8081/api/v1/products/1036581816064081921",
+					"raw": "localhost:8081/api/v1/products/1037654815790628865",
 					"host": [
 						"localhost"
 					],
@@ -41,7 +41,7 @@
 						"api",
 						"v1",
 						"products",
-						"1036581816064081921"
+						"1037654815790628865"
 					]
 				}
 			},
@@ -62,7 +62,7 @@
 						},
 						{
 							"key": "name",
-							"value": "Test Data",
+							"value": "Test Data1",
 							"type": "text"
 						},
 						{
@@ -113,7 +113,7 @@
 						{
 							"key": "image",
 							"type": "file",
-							"src": "/Users/quqo-copter/Desktop/Ragdoll Cat.jpg"
+							"src": "/Users/quqo-copter/Desktop/forrest gump.png"
 						},
 						{
 							"key": "name",
@@ -143,7 +143,7 @@
 					]
 				},
 				"url": {
-					"raw": "localhost:8081/api/v1/products/1036595302058033153",
+					"raw": "localhost:8081/api/v1/products/1037654815790628865",
 					"host": [
 						"localhost"
 					],
@@ -152,7 +152,7 @@
 						"api",
 						"v1",
 						"products",
-						"1036595302058033153"
+						"1037654815790628865"
 					]
 				}
 			},
@@ -164,7 +164,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "localhost:8081/api/v1/products/1035999021547585537",
+					"raw": "localhost:8081/api/v1/products/1037654815790628865",
 					"host": [
 						"localhost"
 					],
@@ -173,7 +173,7 @@
 						"api",
 						"v1",
 						"products",
-						"1035999021547585537"
+						"1037654815790628865"
 					]
 				}
 			},
@@ -185,7 +185,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "localhost:8081/api/v1/products/image/1036595302058033153",
+					"raw": "localhost:8081/api/v1/products/image/1036806470986956801",
 					"host": [
 						"localhost"
 					],
@@ -195,7 +195,7 @@
 						"v1",
 						"products",
 						"image",
-						"1036595302058033153"
+						"1036806470986956801"
 					]
 				}
 			},

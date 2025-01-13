@@ -1,2 +1,3 @@
 cockroach-data
 .env.local
+.DS_Store
