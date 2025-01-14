@@ -5,8 +5,9 @@ import (
 	"product-challenge/internal/controller"
 )
 
-func SetupProductRoutes(router *gin.RouterGroup, controller controller.ProductController) {
+func SetupProductRoutes(router *gin.RouterGroup, middleware gin.HandlerFunc, controller controller.ProductController) {
 	products := router.Group("/products")
+	products.Use(middleware)
 	{
 		// read
 		products.GET("", controller.GetAllProducts)

@@ -156,7 +156,6 @@ func (r *productRepository) Update(ctx context.Context, req *models.UpsertProduc
 	}
 
 	// 2. insert into db
-	//if err := r.db.Create(&productData).Error; err != nil {
 	if err := r.db.Where("id = ?", productId).
 		Updates(&product).Error; err != nil {
 		return nil, err
