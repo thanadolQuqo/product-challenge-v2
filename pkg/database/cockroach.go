@@ -29,7 +29,10 @@ func NewCockroachDB(cfg *config.Config) (*gorm.DB, error) {
 	}
 
 	// Auto Migrate the schema
-	err = db.AutoMigrate(&models.Products{})
+	err = db.AutoMigrate(
+		&models.Products{},
+		&models.User{},
+	)
 	if err != nil {
 		return nil, fmt.Errorf("failed to migrate database: %v", err)
 	}

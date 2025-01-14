@@ -32,9 +32,10 @@ type RedisConfig struct {
 }
 
 type Config struct {
-	Database DBConfig    `json:"database"`
-	Aws      AWSConfig   `json:"aws"`
-	Redis    RedisConfig `json:"redis"`
+	Database  DBConfig    `json:"database"`
+	Aws       AWSConfig   `json:"aws"`
+	Redis     RedisConfig `json:"redis"`
+	JwtSecret string      `json:"jwt_secret"`
 }
 
 func LoadConfig() (*Config, error) {
@@ -68,6 +69,7 @@ func LoadConfig() (*Config, error) {
 			DB:       int(redisDB),
 			//Protocol: 2,
 		},
+		JwtSecret: getEnv("JWT_SECRET", ""),
 	}
 
 	return config, nil
