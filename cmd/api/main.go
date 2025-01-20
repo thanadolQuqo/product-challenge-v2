@@ -45,11 +45,14 @@ func main() {
 	userService := services.NewUserService(userRepo)
 	userController := controller.NewUserController(userService)
 
+	orderRepo := repository.NewOrderRepository(db, cfg)
+	orderService := services.NewOrderService(orderRepo)
+	orderController := controller.NewOrderController(orderService)
 	// initialize router
 	r := productRouter.NewRouter(cfg)
 
 	// setup router
-	r.SetupRoutes(productController, userController)
+	r.SetupRoutes(productController, userController, orderController)
 
 	if err := r.Run(":8081"); err != nil {
 		log.Fatalf("Failed to start server: %v", err)

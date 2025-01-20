@@ -28,10 +28,20 @@ func NewCockroachDB(cfg *config.Config) (*gorm.DB, error) {
 		return nil, fmt.Errorf("failed to connect to database: %v", err)
 	}
 
+	// Create sequence if not exists
+	err = db.Exec(`CREATE SEQUENCE IF NOT EXISTS order_number_seq START 1`).Error
+	if err != nil {
+		return nil, err
+	}
+	
 	// Auto Migrate the schema
 	err = db.AutoMigrate(
 		&models.Products{},
 		&models.User{},
+		&models.Order{},
+		&models.OrderItem{},
+		&models.Cart{},
+		&models.CartItem{},
 	)
 	if err != nil {
 		return nil, fmt.Errorf("failed to migrate database: %v", err)

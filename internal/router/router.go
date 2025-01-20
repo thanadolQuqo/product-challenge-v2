@@ -1,8 +1,8 @@
 package router
 
 import (
-	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v5"
 	"net/http"
 	"product-challenge/internal/controller"
 	"product-challenge/internal/router/routes"
@@ -21,7 +21,7 @@ func NewRouter(cfg *config.Config) *Router {
 	}
 }
 
-func (r *Router) SetupRoutes(productController *controller.ProductController, userController *controller.UserController) {
+func (r *Router) SetupRoutes(productController *controller.ProductController, userController *controller.UserController, orderController *controller.OrderController) {
 	// API version group
 	v1 := r.engine.Group("/api/v1")
 
@@ -30,6 +30,7 @@ func (r *Router) SetupRoutes(productController *controller.ProductController, us
 	// adding middleware to check for token only in product api
 	routes.SetupProductRoutes(v1, r.authMiddleware(), *productController)
 
+	routes.SetupOrderRoutes(v1, r.authMiddleware(), *orderController)
 }
 
 func (r *Router) Run(addr string) error {

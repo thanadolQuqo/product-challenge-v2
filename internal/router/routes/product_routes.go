@@ -17,6 +17,7 @@ func SetupProductRoutes(router *gin.RouterGroup, middleware gin.HandlerFunc, con
 		products.POST("", controller.CreateProduct)
 		// update
 		products.PUT("/:id", controller.UpdateProduct)
+		products.PUT("/stocks/:id", controller.UpdateProductStock)
 		//delete
 		products.DELETE("/:id", controller.DeleteProduct)
 		products.DELETE("/image/:id", controller.DeleteProductImage)

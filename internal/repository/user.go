@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/dgrijalva/jwt-go"
+	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/crypto/bcrypt"
 	"time"
 
@@ -98,18 +98,20 @@ func (r *userRepository) UserLogin(ctx context.Context, req *models.UserAuthRequ
 
 	// 2. check if time.now() is > token expires field. if it is , generate new token, update token and expire date
 	current := time.Now().Unix()
-
 	if userData.ExpiresAt > current { // if current token not expire, use it
+		fmt.Println("token not expired. using old token")
 		token = userData.Token
 	} else { // generate new token
-		newToken, err := r.GenerateJWT(*req, current)
+		fmt.Println("token expired. generate new token")
+		expireTime := time.Now().Add(time.Hour * 1).Unix()
+		newToken, err := r.GenerateJWT(*req, expireTime)
 		if err != nil {
 			return nil, err
 		}
 		// update token
 		token = newToken
 		userData.Token = newToken
-		userData.ExpiresAt = current
+		userData.ExpiresAt = expireTime // fix this
 		if err := r.db.Where("username = ?", req.Username).
 			Updates(&userData).Error; err != nil {
 			return nil, err

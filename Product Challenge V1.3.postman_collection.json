@@ -1,0 +1,548 @@
+{
+	"info": {
+		"_postman_id": "dd2b61df-046b-4d52-9737-2a5204708ccd",
+		"name": "Product Challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40813384"
+	},
+	"item": [
+		{
+			"name": "User Register",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse the response body as JSON",
+							"let response = pm.response.json();",
+							"",
+							"// Check if the \"token\" field exists in the response",
+							"if (response.token) {",
+							"    // Store the token in a Postman environment variable",
+							"    pm.environment.set(\"access_token\", response.token);",
+							"    console.log(\"Token stored in environment variable:\", response.token);",
+							"} else {",
+							"    console.log(\"Token not found in the response.\");",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "copter1",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8081/api/v1/user/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse the response body as JSON",
+							"let response = pm.response.json();",
+							"",
+							"// Check if the \"token\" field exists in the response",
+							"if (response.token) {",
+							"    // Store the token in a Postman environment variable",
+							"    pm.environment.set(\"access_token\", response.token);",
+							"    console.log(\"Token stored in environment variable:\", response.token);",
+							"} else {",
+							"    console.log(\"Token not found in the response.\");",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "copter1",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8081/api/v1/user/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all products",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8081/api/v1/products",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get product by Id",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzY5MzI1NDcsInVzZXJuYW1lIjoiY29wdGVyMSJ9.s8UR-irCcXwJrq0nBlLpQRYMVHGw44Qc6r4kh2WRC7Q",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8081/api/v1/products/1038873832052457473",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"products",
+						"1038873832052457473"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create product v2 form",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/Users/quqo-copter/Desktop/Ragdoll Cat.jpg"
+						},
+						{
+							"key": "name",
+							"value": "cat",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "test desc",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "20.30",
+							"type": "text"
+						},
+						{
+							"key": "category",
+							"value": "Shrimp",
+							"type": "text"
+						},
+						{
+							"key": "stock",
+							"value": "10",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8081/api/v1/products",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update product v2",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/Users/quqo-copter/Desktop/forrest gump.png"
+						},
+						{
+							"key": "name",
+							"value": "forrest gump",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "movie",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "14.99",
+							"type": "text"
+						},
+						{
+							"key": "category",
+							"value": "Movie",
+							"type": "text"
+						},
+						{
+							"key": "stock",
+							"value": "5",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8081/api/v1/products/1037654815790628865",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"products",
+						"1037654815790628865"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update productstock",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzY5MzI1NDcsInVzZXJuYW1lIjoiY29wdGVyMSJ9.s8UR-irCcXwJrq0nBlLpQRYMVHGw44Qc6r4kh2WRC7Q",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"stock\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/api/v1/products/stocks/1038873866596810753",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"products",
+						"stocks",
+						"1038873866596810753"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete product",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/api/v1/products/1037654815790628865",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"products",
+						"1037654815790628865"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete product image",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/api/v1/products/image/1036806470986956801",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"products",
+						"image",
+						"1036806470986956801"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get product by name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/api/v1/products/search?name=",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"products",
+						"search"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get cart",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8081/api/v1/carts?username=copter1",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"carts"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "copter1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add product to cart",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"copter1\",\n    \"productId\": 1038873866596810753,\n    \"quantity\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/api/v1/carts/add",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"carts",
+						"add"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "copter1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "remove product from cart",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"copter1\",\n    \"productId\": 1038873866596810753,\n    \"quantity\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/api/v1/carts/remove",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"carts",
+						"remove"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "copter1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "make order",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8081/api/v1/orders/make?username=copter1",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"orders",
+						"make"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "copter1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
