@@ -12,6 +12,7 @@ type ProductService interface {
 	GetById(ctx context.Context, id int) (*models.Products, error)
 	GetByName(name string) ([]models.Products, error)
 	Update(ctx context.Context, product *models.UpsertProductRequest, productId int) (*models.Products, error)
+	UpdateStock(ctx context.Context, product *models.ProductStockUpdateReq, productId int) (*models.Products, error)
 	Delete(ctx context.Context, id int) error
 	DeleteImage(ctx context.Context, id int) error
 }
@@ -79,4 +80,11 @@ func (s *productService) DeleteImage(ctx context.Context, id int) error {
 		return err
 	}
 	return nil
+}
+func (s *productService) UpdateStock(ctx context.Context, req *models.ProductStockUpdateReq, productId int) (*models.Products, error) {
+	res, err := s.repo.UpdateStock(ctx, req, productId)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
 }

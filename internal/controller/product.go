@@ -172,3 +172,26 @@ func (c *ProductController) DeleteProductImage(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{"message": fmt.Sprintf("Image of product Id %d is deleted.", id)})
 
 }
+
+func (c *ProductController) UpdateProductStock(ctx *gin.Context) {
+	var req models.ProductStockUpdateReq
+	id, err := strconv.ParseInt(ctx.Param("id"), 10, 64)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+		return
+	}
+
+	if err := ctx.ShouldBind(&req); err != nil {
+		fmt.Println("error should bind")
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	resp, err := c.service.UpdateStock(ctx, &req, int(id))
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, resp)
+}

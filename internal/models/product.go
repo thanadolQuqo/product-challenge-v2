@@ -10,10 +10,9 @@ type UpsertProductRequest struct {
 	Description string                `form:"description" json:"description" binding:"required"`
 	Price       float64               `form:"price" json:"price" binding:"required"`
 	Category    string                `form:"category" json:"category" binding:"required"`
-	Stock       int                   `form:"stock" json:"stock" binding:"required"`
 	Filename    string                `json:"filename"`
 	Image       *multipart.FileHeader `form:"image" json:"image"`
-	ImageFile   *multipart.File       `form:"image_file" json:"image_file"`
+	ImageFile   *multipart.File       `form:"imageFile" json:"image_file"`
 }
 
 type Products struct {
@@ -27,4 +26,8 @@ type Products struct {
 	ImageURL    string    `json:"imageUrl" gorm:"size:500"`
 	CreatedAt   time.Time `json:"createdAt" gorm:"default:CURRENT_TIMESTAMP"`
 	UpdatedAt   time.Time `json:"updatedAt" gorm:"default:CURRENT_TIMESTAMP"`
+}
+
+type ProductStockUpdateReq struct {
+	Stock int `json:"stock" binding:"required"`
 }

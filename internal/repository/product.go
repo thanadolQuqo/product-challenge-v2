@@ -22,6 +22,7 @@ type ProductRepository interface {
 	GetById(ctx context.Context, productId int) (*models.Products, error)
 	GetByName(name string) ([]models.Products, error)
 	Update(ctx context.Context, productReq *models.UpsertProductRequest, productId int) (*models.Products, error)
+	UpdateStock(ctx context.Context, productReq *models.ProductStockUpdateReq, productId int) (*models.Products, error)
 	Delete(ctx context.Context, productId int) error
 	DeleteImage(ctx context.Context, productId int) error
 }
@@ -43,7 +44,7 @@ func (r *productRepository) Create(ctx context.Context, req *models.UpsertProduc
 		Description: req.Description,
 		Price:       req.Price,
 		Category:    req.Category,
-		Stock:       req.Stock,
+		//Stock:       req.Stock,
 	}
 
 	if req.ImageFile != nil {
@@ -141,7 +142,6 @@ func (r *productRepository) Update(ctx context.Context, req *models.UpsertProduc
 		Description: req.Description,
 		Price:       req.Price,
 		Category:    req.Category,
-		Stock:       req.Stock,
 	}
 
 	if req.ImageFile != nil {
@@ -161,7 +161,8 @@ func (r *productRepository) Update(ctx context.Context, req *models.UpsertProduc
 		return nil, err
 	}
 
-	err = r.RemoveProductCache(ctx, productId)
+	// 3. update cache
+	err = r.UpdateProductCache(ctx, productId, product)
 	if err != nil {
 		return nil, err
 	}
@@ -212,7 +213,8 @@ func (r *productRepository) DeleteImage(ctx context.Context, productId int) erro
 		return err
 	}
 
-	err = r.RemoveProductCache(ctx, productId)
+	// update cache
+	err = r.UpdateProductCache(ctx, productId, product)
 	if err != nil {
 		return err
 	}
@@ -271,4 +273,44 @@ func (r *productRepository) RemoveProductCache(ctx context.Context, productId in
 		}
 	}
 	return nil
+}
+
+// UpdateProductCache is a util function that help update product cache data by feeding product id to it.
+func (r *productRepository) UpdateProductCache(ctx context.Context, productId int, product models.Products) error {
+	key := fmt.Sprintf("product:id:%d", productId)
+
+	productJSON, _ := json.Marshal(product)
+	if err := r.redis.Set(ctx, key, productJSON, time.Hour*10).Err(); err != nil {
+		fmt.Println("error set product to redis : ", err)
+	}
+	return nil
+}
+
+func (r *productRepository) UpdateStock(ctx context.Context, productReq *models.ProductStockUpdateReq, productId int) (*models.Products, error) {
+	// 1. check if there is already existing image
+	var product models.Products
+
+	// set data for update
+	product = models.Products{
+		Stock: productReq.Stock,
+	}
+
+	// 2. insert into db
+	if err := r.db.Where("id = ?", productId).
+		Updates(&product).Error; err != nil {
+		return nil, err
+	}
+
+	err := r.db.First(&product, productId).Error
+	if err != nil {
+		return nil, err
+	}
+
+	// update cache
+	err = r.UpdateProductCache(ctx, productId, product)
+	if err != nil {
+		return nil, err
+	}
+
+	return &product, nil
 }
